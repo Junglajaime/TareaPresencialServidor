@@ -1,16 +1,12 @@
 <?php
-// Simulación de lógica de autenticación
-$valid_users = array(
-    'admin' => array('password' => 'admin123', 'role' => 'admin'),
-    'user' => array('password' => 'user123', 'role' => 'user')
-);
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $recuerdame = isset($_POST['recuerdame']) ? $_POST['recuerdame'] : "off";
+    $mantener = isset($_POST['mantener']) ? $_POST['mantener'] : "off";
 
-    // Verificar las credenciales
-    if (array_key_exists($username, $valid_users) && $valid_users[$username]['password'] === $password) {
+    // Verificar las credenciales según el tipo de usuario
+    if (($username === 'admin' && $password === 'admin') || ($username === 'user' && $password === 'user')) {
         // Iniciar sesión
         session_start();
         $_SESSION['username'] = $username;
@@ -34,3 +30,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
+

@@ -18,17 +18,14 @@
                         <form method="post" action="validate_login.php">
                             <div class="form-group">
                                 <label for="username">Usuario:</label>
-                                <input type="text" class="form-control" id="username" name="username" 
-                                    <?php echo (isset($_COOKIE['usuario_recordado'])) ? "value='{$_COOKIE['usuario_recordado']}'" : ""; ?>
-                                    required>
+                                <input type="text" class="form-control" id="username" name="username" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Contraseña:</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="recuerdame" name="recuerdame"
-                                    <?php echo (isset($_COOKIE['usuario_recordado'])) ? "checked='checked'" : ""; ?>>
+                                <input type="checkbox" class="form-check-input" id="recuerdame" name="recuerdame">
                                 <label class="form-check-label" for="recuerdame">Recuérdame</label>
                             </div>
                             <div class="form-group form-check">
