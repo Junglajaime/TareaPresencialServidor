@@ -23,11 +23,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        // Recordar sesión mediante cookie si la opción está marcada
+        if ($recuerdame === 'on') {
+            $cookie_name = 'remember_me';
+            $cookie_value = base64_encode(json_encode(['username' => $username, 'role' => $_SESSION['role']]));
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+        }
+
         // Redirigir según el perfil
         if ($username === 'admin') {
-            header('Location: admin.php');
+            header('Location: users/admin.php');
         } else {
-            header('Location: users.php');
+            header('Location: users/users.php');
         }
         exit();
     } else {

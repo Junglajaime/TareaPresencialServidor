@@ -1,3 +1,13 @@
+<?php
+// Verificar si hay un mensaje de error en la sesión
+$error_message = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : "";
+unset($_SESSION['error_message']); // Limpiar el mensaje después de mostrarlo
+
+// Mostrar el mensaje de error (si existe)
+if (!empty($error_message)) {
+    echo "<div class='alert alert-danger'>$error_message</div>";
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
