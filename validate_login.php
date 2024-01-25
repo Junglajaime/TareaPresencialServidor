@@ -7,10 +7,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verificar las credenciales según el tipo de usuario
     if (($username === 'admin' && $password === 'admin') || ($username === 'user' && $password === 'user')) {
-        // Iniciar sesión
+        // Iniciar sesión y manejar opciones de recordar/mantener
         session_start();
         $_SESSION['username'] = $username;
-        $_SESSION['role'] = $valid_users[$username]['role'];
+        $_SESSION['role'] = ($username === 'admin') ? 'admin' : 'user';
+
+        // Contar accesos y actualizar última visita si no se mantiene la sesión abierta
+        if (!isset($_SESSION['accesos'])) {
+            $_SESSION['accesos'] = 1;
+            $_SESSION['ultima_visita'] = date('d/m/Y');
+        } else {
+            $_SESSION['accesos']++;
+            if ($mantener !== 'on') {
+                $_SESSION['ultima_visita'] = date('d/m/Y');
+            }
+        }
 
         // Redirigir según el perfil
         if ($username === 'admin') {
@@ -30,4 +41,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
-
