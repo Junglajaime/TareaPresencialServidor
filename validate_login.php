@@ -1,8 +1,8 @@
 <?php
 // Simulación de lógica de autenticación
 $valid_users = array(
-    'admin' => 'admin123',
-    'usuario' => 'usuario123'
+    'admin' => array('password' => 'admin123', 'role' => 'admin'),
+    'user' => array('password' => 'user123', 'role' => 'user')
 );
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,8 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     // Verificar las credenciales
-    if (array_key_exists($username, $valid_users) && $valid_users[$username] === $password) {
-        // Autenticación exitosa, redirigir según el perfil
+    if (array_key_exists($username, $valid_users) && $valid_users[$username]['password'] === $password) {
+        // Iniciar sesión
+        session_start();
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = $valid_users[$username]['role'];
+
+        // Redirigir según el perfil
         if ($username === 'admin') {
             header('Location: admin.php');
         } else {
